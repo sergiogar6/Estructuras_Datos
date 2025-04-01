@@ -6,4 +6,8 @@ public class Pedido {
 
     private HashMap<Producto, Integer> pedido;
     private double importeTotal;
+
+    public Pedido() {
+
+    }
 }

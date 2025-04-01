@@ -17,6 +17,11 @@ El programa se divide en dos partes.
 
 ## Programa principal
 
+### Diagrama de clases UML
+
+### Codigo Plant UML
+```` aqui va el codigo ````
+
 ## Pruebas
 
 ## Entrega

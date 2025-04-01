@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Mercadam {
     static Random random = new Random();
-    private final String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private static final String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static List<Cliente> clientes;
 
     public Mercadam() {
@@ -17,9 +17,29 @@ public class Mercadam {
 
     static void generarClientes() {
 
+        for (int i = 0; i < random.nextInt(10)+5; i++) {
+
+            String user = "";
+            String pass = "";
+
+            for (int j = 0; j < 8; j++) {
+
+                int indexUser = random.nextInt(caracteres.length());
+                int indexPass = random.nextInt(caracteres.length());
+
+                user += caracteres.charAt(indexUser);
+                pass += caracteres.charAt(indexPass);
+
+            }
+
+            Cliente cliente = new Cliente(user, pass);
+            clientes.add(cliente);
+
+        }
+
     }
 
-    static List<Cliente> getClientes() {
+    public List<Cliente> getClientes() {
         return Collections.unmodifiableList(clientes);
     }
 
