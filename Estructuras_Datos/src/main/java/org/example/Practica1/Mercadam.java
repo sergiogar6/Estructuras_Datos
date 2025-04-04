@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Mercadam {
+
     static Random random = new Random();
     private static final String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static List<Cliente> clientes;
@@ -19,20 +20,20 @@ public class Mercadam {
 
         for (int i = 0; i < random.nextInt(10)+5; i++) {
 
-            String user = "";
-            String pass = "";
+            StringBuilder user = new StringBuilder();
+            StringBuilder pass = new StringBuilder();
 
             for (int j = 0; j < 8; j++) {
 
                 int indexUser = random.nextInt(caracteres.length());
                 int indexPass = random.nextInt(caracteres.length());
 
-                user += caracteres.charAt(indexUser);
-                pass += caracteres.charAt(indexPass);
+                user.append(caracteres.charAt(indexUser));
+                pass.append(caracteres.charAt(indexPass));
 
             }
 
-            Cliente cliente = new Cliente(user, pass);
+            Cliente cliente = new Cliente(user.toString(), pass.toString());
             clientes.add(cliente);
 
         }
