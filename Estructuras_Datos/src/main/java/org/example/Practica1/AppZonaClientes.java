@@ -1,8 +1,6 @@
 package org.example.Practica1;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class AppZonaClientes {
@@ -14,20 +12,77 @@ public class AppZonaClientes {
 
         System.out.println("*** COMPRA ONLINE DE MERCADAM***");
         System.out.println();
-        System.out.println(mercadam.getClientes());
+
         boolean sesionIniciada = autenticacion(mercadam.getClientes());
+
         if (sesionIniciada) {
+
             iniciarCompra();
+            String continuar = "s";
 
-            System.out.print("Elige un producto;");
+            do {
+
+
+            imprimirProductos();
+
+            System.out.print("Elige un producto: ");
             String productoElegido = sc.next();
-            System.out.println("========================");
+            System.out.println("\n================================\n");
 
-            cliente.insertarProducto(productoElegido);
+            boolean productoExiste = cliente.insertarProducto(productoElegido);
+
+            if (productoExiste) {
+                continuar = sc.next();
+            }
+
+            } while (continuar.equalsIgnoreCase("s"));
+
+            cliente.getPedido().mostrarPedido();
+
+            String opcion;
+            do {
+                System.out.println("¿QUÉ DESEA HACER? \n");
+                System.out.println("[1]. Aplicar promo.");
+                System.out.println("[2]. Mostrar resumen ordenado por uds.");
+                System.out.println("[3]. Terminar pedido.");
+
+                System.out.println("\n================================\n");
+                System.out.println("Elige una opcion: ");
+                opcion = sc.next();
+
+                System.out.println("\n================================\n");
+
+                switch (opcion) {
+                    case "1":
+                        if (!cliente.isPromociones()) {
+                            cliente.setPromociones(true);
+                            cliente.getPedido().aplicarPromo3x2();
+                            cliente.getPedido().aplicarPromo10();
+                            System.out.println("PROMO 3X2 Y 10% APLICADAS");
+                            cliente.getPedido().mostrarPedido();
+                        } else {
+                            System.out.println("YA HAS APLICADO TUS PROMOS");
+                        }
+                        break;
+
+                    case "2":
+                        cliente.getPedido().mostrarPedidoOrdenado();
+                        break;
+
+                    case "3":
+                        imprimirDespedida();
+                        break;
+
+                    default:
+                        System.out.println("OPCION NO VALIDA");
+                        break;
+
+                }
+
+            } while (!opcion.equalsIgnoreCase("3"));
 
 
         }
-
 
     }
 
@@ -71,8 +126,6 @@ public class AppZonaClientes {
     public static void iniciarCompra() {
         cliente.setPedido(new Pedido());
 
-        imprimirProductos();
-
     }
 
     public static void imprimirProductos() {
@@ -82,15 +135,14 @@ public class AppZonaClientes {
 
         for (Producto producto : Producto.values()) {
             System.out.println(producto + " precio (" + producto.getPrecio() + "€),");
-            System.out.println();
         }
 
-        System.out.println("==========================");
+        System.out.println("\n================================\n");
 
     }
 
     public static void imprimirDespedida() {
-
+        System.out.println("GRACIAS POR SU PEDIDO. Se lo mandaremos a la direccion " + cliente.getDireccion());
     }
 
 }

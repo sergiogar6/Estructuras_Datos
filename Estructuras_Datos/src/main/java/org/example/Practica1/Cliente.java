@@ -1,7 +1,5 @@
 package org.example.Practica1;
 
-import java.util.Random;
-
 public class Cliente {
 
     private String usuario;
@@ -35,6 +33,18 @@ public class Cliente {
         this.pedido = pedido;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public boolean isPromociones() {
+        return promociones;
+    }
+
+    public void setPromociones(boolean promociones) {
+        this.promociones = promociones;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" +
@@ -50,7 +60,7 @@ public class Cliente {
 
     }
 
-    public void insertarProducto(String producto) {
+    public boolean insertarProducto(String producto) {
 
         boolean productoExiste = false;
 
@@ -62,18 +72,22 @@ public class Cliente {
         }
 
         if (productoExiste) {
+            //el importe total se actualiza
+            this.pedido.setImporteTotal(this.pedido.getImporteTotal() + Producto.valueOf(producto).getPrecio());
+            //se añade el producto a la lista y en caso de ya estar se suma uno a su valor.
             pedido.getPedido().put(Producto.valueOf(producto), pedido.getPedido().getOrDefault(Producto.valueOf(producto), 0)+1);
+            System.out.println("Has añadido " + producto + " con un precio de " + Producto.valueOf(producto).getPrecio() +
+                    "€. Importe total del carrito: " + this.importePedido() + "€. Quieres añadir mas productos a tu carrito de la compra? (S/N)");
 
         } else {
             System.out.println("El producto no existe! Elige otro.");
         }
+        return productoExiste;
     }
 
-    static double importePedido() {
-        double total;
+    public double importePedido() {
 
-
-        return 0;
+        return pedido.getImporteTotal();
 
     }
 
